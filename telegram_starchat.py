@@ -92,7 +92,9 @@ def echo(bot, update):
             "user_input": {
                 "text": update.message.text
             },
-            "data": data,
+            "values": {
+                "data": data
+            },
             "traversed_states": traversed_states
         }
 
@@ -103,7 +105,6 @@ def echo(bot, update):
         bot.sendMessage(update.message.chat_id, text=response, parse_mode="HTML")
         datastore.setdefault(update.message.chat_id, {})["traversed_states"] = res[1][0]["traversed_states"]
         datastore[update.message.chat_id]["data"] = res[1][0]["data"]
-        print("DATASTORE>>>> ", datastore)
     except (starchat_interface.NoContentApiCallException, KeyError, IndexError) as e:
         response = "I'm sorry " + update.message.chat.first_name + ", I don't know how to answer"
         logger.error(e.value)
@@ -121,7 +122,7 @@ def error(bot, update, error):
 
 def main():
     # Create the EventHandler and pass it your bot's token.
-    updater = Updater("XXXX")
+    updater = Updater("XXXXX:YYYYYY")
 
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
