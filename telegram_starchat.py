@@ -44,13 +44,13 @@ datastore = {}
 # update. Error handlers also receive the raised TelegramError object in error.
 def start(bot, update):
     data = {
-        "user_fist_name": update.message.chat.first_name
+        "user_first_name": update.message.chat.first_name
     }
     body = {
         "conversation_id": str(update.message.chat_id),
         "user_input": { "text": "" },
         "values": {
-            "return_value": "help",
+            "return_value": "init",
             "traversed_states": [],
             "data": data
         }
@@ -84,7 +84,7 @@ def echo(bot, update):
         data = datastore[update.message.chat_id]["data"]
         traversed_states = datastore[update.message.chat_id]["traversed_states"]
     except:
-        data = { "user_fist_name": update.message.chat.first_name }
+        data = { "user_first_name": update.message.chat.first_name }
         traversed_states = []
 
     body = {
@@ -100,9 +100,10 @@ def echo(bot, update):
         res = starchat.get_next_response(body=body)
         logger.debug(res)
         response = res[1][0]["bubble"]
-        datastore[update.message.chat_id]["traversed_states"] = res[1][0]["traversed_states"]
-        datastore[update.message.chat_id]["data"] = res[1][0]["data"]
         bot.sendMessage(update.message.chat_id, text=response, parse_mode="HTML")
+        datastore.setdefault(update.message.chat_id, {})["traversed_states"] = res[1][0]["traversed_states"]
+        datastore[update.message.chat_id]["data"] = res[1][0]["data"]
+        print("DATASTORE>>>> ", datastore)
     except (starchat_interface.NoContentApiCallException, KeyError, IndexError) as e:
         response = "I'm sorry " + update.message.chat.first_name + ", I don't know how to answer"
         logger.error(e.value)
@@ -120,7 +121,7 @@ def error(bot, update, error):
 
 def main():
     # Create the EventHandler and pass it your bot's token.
-    updater = Updater("XXXXXXXX:YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY")
+    updater = Updater("XXXX")
 
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
