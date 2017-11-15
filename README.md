@@ -11,15 +11,17 @@ This is a quick and dirty telegram sample bot in python. The program uses an in 
 
 ## Install starchat on localhost
 
-Follow instructions on [https://getjenny.github.io/starchat-doc/](https://getjenny.github.io/starchat-doc/)
+Start the service following the instructions on [StarChat Documentation](https://getjenny.github.io/starchat-doc/#setup-with-docker-recommended) (5-10 minutes)
 
-Create a new index:
+Create a new index. On a terminal (Unix) type:
 
 ```bash
 curl -v -H "Content-Type: application/json" -X POST "http://localhost:8888/index_management/create"
 ```
 
 ## Make a Python3 virtual environment (optional)
+
+Optional, but recommended!
 
 ```
 virtualenv -p python3  env3_telegram
