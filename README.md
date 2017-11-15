@@ -1,8 +1,8 @@
-# Q&D Telegram bot based on StarCgat
+# Telegram bot based on StarCgat
 
 This is a quick and dirty telegram sample bot in python based on [StarChat.ai](http://starchat.ai). The program uses an in memory datastore for sessions data. If you want to contribute with a proper database, eg SQLite, you are wellcome!
 
-# Use this repository
+# Fork this repository (optional)
 
 * Fork the repository on your account. You could clone this rep directly, but then you won't be able to push your changes on github. Click on top left button "Fork" :)
 * Clone: `git clone git@github.com:MY_ACCOUNT/starchat_telegram_bot.git`
