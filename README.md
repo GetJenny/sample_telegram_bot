@@ -59,6 +59,12 @@ curl -v --form "csv=@starchat_configuration_sample.csv" http://localhost:8888/de
 curl -v -H "Content-Type: application/json" -X POST "http://localhost:8888/decisiontable_analyzer"
 ```
 
+If you want to delete the old configuration:
+
+```bash
+curl -v -H "Content-Type: application/json" -X DELETE http://localhost:8888/decisiontable
+```
+
 # Create a new Telegram bot
 
 You need a telegram account of course!
