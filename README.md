@@ -33,7 +33,7 @@ curl -v --form "csv=@<FILE_PATH>" http://localhost:8888/decisiontable_upload_csv
 e.g.
 
 ```bash
-curl -v --form "csv=@doc/decision_table_starchat_doc.csv.bkp" http://localhost:8888/decisiontable_upload_csv
+curl -v --form "csv=@starchat_configuration_sample.csv" http://localhost:8888/decisiontable_upload_csv
 ```
 
 Apply the modifications:
