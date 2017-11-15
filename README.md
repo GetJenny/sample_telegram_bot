@@ -1,6 +1,19 @@
-# sample_telegram_bot
+# Q&D Telegram bot based on StarCgat
 
-This is a quick and dirty telegram sample bot in python. The program uses an in memory datastore for sessions data. If you want to contribute with a proper database, eg SQLite, you are wellcome!
+This is a quick and dirty telegram sample bot in python based on [StarChat.ai](http://starchat.ai). The program uses an in memory datastore for sessions data. If you want to contribute with a proper database, eg SQLite, you are wellcome!
+
+# Use this repository
+
+* Fork the repository on your account. You could clone this rep directly, but then you won't be able to push your changes on github. Click on top left button "Fork" :)
+* Clone: `git clone git@github.com:MY_ACCOUNT/starchat_telegram_bot.git`
+* Set this repository as "upstream", so you can rebase your repository everytime we make a change: `git remote add upstream  git@github.com:GetJenny/starchat_telegram_bot.git`
+
+In the future, when you want to update your repository with GetJenny's one, just type: 
+
+```bash
+git fetch upstream
+git rebase upstream/master
+```
 
 # Requirements
 
