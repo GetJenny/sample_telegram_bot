@@ -56,7 +56,7 @@ Load a configuration file into StarChat and apply the changes:
 ```bash
 curl -v --form "csv=@starchat_configuration_sample.csv" http://localhost:8888/decisiontable_upload_csv
 # Apply:
-curl -v -H "Content-Type: application/json" -X POST "http://localhost:${PORT}/decisiontable_analyzer"
+curl -v -H "Content-Type: application/json" -X POST "http://localhost:8888/decisiontable_analyzer"
 ```
 
 # Create a new Telegram bot
