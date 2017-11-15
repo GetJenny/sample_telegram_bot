@@ -19,6 +19,13 @@ Create a new index:
 curl -v -H "Content-Type: application/json" -X POST "http://localhost:8888/index_management/create"
 ```
 
+## make a Python3 virtual environment (optional)
+
+```
+virtualenv -p python3  env3_telegram
+source env3_telegram/bin/activate
+```
+
 ## install python packages telegram and urllib3
 
 ```bash
