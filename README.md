@@ -15,6 +15,7 @@ The program uses an in memory datastore for sessions data, of course would be be
 Follow instructions on [https://getjenny.github.io/starchat-doc/](https://getjenny.github.io/starchat-doc/)
 
 Create a new index:
+
 ```bash
 curl -v -H "Content-Type: application/json" -X POST "http://localhost:8888/index_management/create"
 ```
@@ -54,7 +55,11 @@ curl -v -H "Content-Type: application/json" -X POST "http://localhost:${PORT}/de
 * go on [https://web.telegram.org/#/im?p=@BotFather]
 * type the command "/newbot" to create a new bot, follow the instructions
 * collect the unique token access which is something like this:
-```Use this token to access the HTTP API: XXXXXXX:YYYYYYYYYYYYYYYYYYYYYYYYYYYY`````
+
+```
+Use this token to access the HTTP API: XXXXXXX:YYYYYYYYYYYYYYYYYYYYYYYYYYYY
+````
+
 * edit the file telegram_starchat.py and replace the token access into the main function
 
 
