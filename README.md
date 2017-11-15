@@ -69,8 +69,8 @@ You need a telegram account of course!
 
 ```
 Use this token to access the HTTP API: XXXXXXX:YYYYYYYYYYYYYYYYYYYYYYYYYYYY
-````
+```
 
 * Edit the file telegram_starchat.py and replace the token access into the main function
-
+* `python3 telegram_starchat.py `
 
