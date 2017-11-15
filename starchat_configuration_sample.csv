@@ -1,0 +1,68 @@
+state,execution_order,max_state_count,analyzer,"queries (T,I)",bubble (R),action (R),action_input (R),state_data (R),success_value (R),failure_value (R)
+init,1,0,,,"Welcome. Ask ""help"" for more info.",,,,,
+help,1,0,"keyword(""help"")",,At the moment, only questions about Starchat, eg how to install StarChat? ...how to contribute? ...is it open source? ...how to install with docker? ...how to make a standalone installation? ...how to index data?,,,,,
+contribute,1,0,"bor(keyword(""contribute""))",,"To contribute to <a href=""http://git.io/*chat"">StarChat</a>, please send us a pull request from your fork of this repository.
+
+Our concise contribution guideline contains the bare minimum requirements of the code contributions.
+
+Before contributing (or opening issues), you might want to email us at starchat@getjenny.com.",,,,,
+quickstart,1,0,"bor(band(keyword(""start""), keyword(""starchat"")), keyword(""quickstart""))",,"The easiest way is to install StarChat using docker.
+<pre>git clone git@github.com:GetJenny/starchat-docker.git</pre>
+<pre>cd starchat</pre>
+<pre>docker-compose up -d</pre>
+<pre># create the indices in Elasticsearch</pre>
+<pre>curl -v -H ""Content-Type: application/json"" -X POST ""http://localhost:8888/index_management/create""</pre>
+Load a configuration file (download it from our <a href=""https://github.com/GetJenny/starchat/tree/master/doc"">GitHub rep</a>)
+<pre>curl -v --form ""csv=@doc/decision_table_starchat_doc.csv"" http://localhost:8888/decisiontable_upload_csv</pre>
+Index the analyzers:
+<pre>curl -v -H ""Content-Type: application/json"" -X POST ""http://localhost:8888/decisiontable_analyzer""</pre>
+",,,,,
+docker_install,1,0,"band(keyword(""docker""), keyword(""install.*""))",,"Ask "quickstart" to simply launch the three needed dockers. Still, if you want to test a particular branch, generate a packet distribution:
+<pre>sbt dist</pre>
+Then enter the directory docker-starchat:
+<pre>cd  docker-starchat</pre>
+You will get a message like <code>Your package is ready in ...../target/universal/starchat-4ee.... .zip</code>.
+<pre>cd starchat-docker</pre>
+<pre>unzip ../target/universal/starchat-4eee.....zip</pre>
+<pre>ln -s starchat-4ee..../  starchat</pre>
+Now launch the dockers:
+<pre>docker-compose up -d</pre>
+If you have problems, tell me the output (eg <i>elastisearch exited with code 78</i>) otherwise ask <i>create elasticsearch indices</i>.",,,,,
+create_es_indices,1,0,"band(keyword(""create""), keyword(""elastic.*""),  bor(keyword(""index""),  keyword(""indices""),  keyword(""indeces""),  keyword(""indexes"")))",,"Run
+<pre>curl -v -H "Content-Type: application/json" -X POST ""http://localhost:8888/index_management/create""</pre>
+Now ask me how to <i>load configuration file</i>.
+",,,,,
+delete_es_indexes,1,0,"band(keyword(""delete""), bor(keyword(""index.*""), keyword(""indic.*"")))",,"To delete previously created indexes:
+<pre>curl -v -H ""Content-Type: application/json"" -X DELETE http://localhost:8888/decisiontable</pre>",,,,,
+create_es_indexes,1,0,"band(keyword(""create""), bor(keyword(""index.*""), keyword(""indic.*"")))",,"To create Elasticsearch indexes:
+<pre>curl -v -H ""Content-Type: application/json"" -X POST http://localhost:8888/index_management/create</pre>",,,,,
+index_data,1,0,"band(keyword(""index""), keyword(""data""))",,"There are three kind of data on starchat:
+\n
+* Knowledge Base: contains a dataset wit Questions/Answers and is used by the question/answer recommender
+\n
+* Decision Table:  stores the behaviour of the chatbot
+\n
+* Terms Index: stores the vector representation of terms, this data are needed to use some of the semantic analysis features in StarChat.
+\n
+To index data into the Knowledge Base see: <a href=""https://getjenny.github.io/starchat-doc/#configuration-of-the-answer-recommender-knowledge-base"">Configuration of the answer recommender</a>
+To index data into the Decision Table see: <a href=""https://getjenny.github.io/starchat-doc/#configuration-of-the-decisiontable"">Configuration of the Decision Table</a>
+\n
+To index terms you can download a pre-trained word2vec model or train a new model by yourself, note that indexing programs only accept a textual format for the input file: <a href=""https://getjenny.github.io/starchat-doc/#indexing-terms-on-term-table"">Indexing of the terms vector dataset</a>",,,,,
+index_analyzer,1,0,"band(bor(keyword(""index""),keyword(""load"")), keyword(""analyzer""))",,If you want to re-index the analyzer fields:<br><code>./docker-starchat/starchat/scripts/api_test/postAnalyzer.sh</code>.,,,,,
+load_conf_file,1,0,"band(keyword(""load.*""), bor(keyword(""config.*""), band(keyword(""decision""), keyword(""table""))), keyword(""file.*""))",,"Just run:
+<pre>curl -v --form ""csv=@doc/FILENAME.csv"" http://localhost:8888/decisiontable_upload_csv</pre>.",,,,,
+install,1,0,"band(bor(keyword(""setup""), keyword(""install.*"")), bnot(bor(keyword(""standalone""), keyword(""docker""))))",,"Just choose one of the two:
+
+* docker install (recommended)
+
+* standalone install",,,,,
+standalone_install,1,0,"band(keyword(""standal.*""), keyword(""install""))",,"Have a look at <a href=""https://getjenny.github.io/starchat-doc/#install-without-docker"">how to install without Docker</a>.",show_buttons,"{ ""With Docker"": ""docker_install"", ""Without Docker"": ""quickstart"" }",,eval(show_buttons),dont_understand
+code_78,1,0,"band(keyword(""code""),keyword(""78""))",,"If elasticsearch complain about the size of the virtual memory:
+<pre>max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]</pre>
+<pre>elastisearch exited with code 78</pre>
+run:
+<pre>Sysctl -w vm.max_map_count=262144</pre>",,,,,
+licence,1,0,"bor(band(keyword(""open""), keyword(""source"")), keyword(""opensource""), keyword(""licence""))",,"StarChat is Open Source software, namely released under the General Public Licence 2. More information on the <a href=""http://git.io/*chat"">repository</a>",,,,,
+swearing,1,0,"booleanor(keyword(""cazzo""), keyword(""idiot""), keyword(""fuck.*""), keyword(""screw""), keyword(""damn.*""), keyword(""asshole""))",,"I might be wrong, but I detected swearing. Did you swear?",,,,,
+call_operator,1,0,"band(bor(keyword(""call""),keyword(""talk""),keyword(""speak"")),keyword(""operator""))",,"No operator is available at the moment, sorry. You just have me.",,,,,
+dont_understand,1,0,,,"I do not understand your input, please try again or type ""help"" to know my capabilities",,,,,
