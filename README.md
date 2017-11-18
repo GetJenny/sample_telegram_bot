@@ -6,7 +6,11 @@ This is a quick and dirty telegram sample bot in python based on [StarChat.ai](h
 
 * Fork the repository on your account. You could clone this rep directly, but then you won't be able to push your changes on github. Click on top left button "Fork" :)
 * Clone: `git clone git@github.com:MY_ACCOUNT/starchat_telegram_bot.git`
-* Set this repository as "upstream", so you can rebase your repository everytime we make a change: `git remote add upstream  git@github.com:GetJenny/starchat_telegram_bot.git`
+* Set this repository as "upstream", so you can rebase your repository everytime we make a change: 
+
+```
+git remote add upstream  git@github.com:GetJenny/starchat_telegram_bot.git
+```
 
 In the future, when you want to update your repository with GetJenny's one, just type: 
 
