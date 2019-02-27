@@ -1,4 +1,4 @@
-from urllib3 import PoolManager, Timeout
+from urllib3 import PoolManager, Timeout, util
 import json
 import time
 
@@ -25,9 +25,12 @@ class NoContentApiCallException(Exception):
 
 class Starchat:
     def __init__(self):
-        self.starchat_url = "http://localhost:8888"
-        self.post_headers = {'Content-Type': 'application/json'}
-        self.get_headers = self.post_headers
+        self.starchat_url = "http://localhost:8889"
+        headers = util.make_headers(basic_auth='eremocafe:p4ssw0rd')
+        headers['Content-Type']='application/json'
+        self.post_headers = headers
+        self.get_headers = headers
+        print("FANCU", self.post_headers)
 
     @staticmethod
     def call_api_function(url, method, body=None, headers={'Content-Type': 'application/json'}):
@@ -65,6 +68,7 @@ class Starchat:
     def get_next_response(self, body):
         url = self.starchat_url + "/get_next_response"
         headers = self.post_headers
+        print("HEADERS......................", self.post_headers)
         body = body
         res = self.call_api_function(url=url, method="POST", body=json.dumps(body), headers=headers)
         if res[0] > 299 or res[0] < 200:
