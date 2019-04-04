@@ -13,9 +13,7 @@ import logging
 import starchat_interface as starchat_interface
 
 starchat = starchat_interface.Starchat()
-starchat.starchat_url = "http://localhost:8888"
-starchat.post_headers = {'Content-Type': 'application/json'}
-starchat.get_headers = starchat.post_headers
+starchat.starchat_url = "http://localhost:8889/index_eremocafe_italian_0"
 
 
 """
@@ -47,12 +45,12 @@ def start(bot, update):
         "user_first_name": update.message.chat.first_name
     }
     body = {
-        "conversation_id": str(update.message.chat_id),
-        "user_input": { "text": "" },
+        "conversationId": str(update.message.chat_id),
+        "userInput": { "text": "" },
+        "traversedStates": [],
+        "data": {},
         "values": {
-            "return_value": "init",
-            "traversed_states": [],
-            "data": data
+            "returnValue": "init"
         }
     }
 
@@ -61,19 +59,19 @@ def start(bot, update):
         res = starchat.get_next_response(body=body)
         logger.debug(res)
         response = res[1][0]["bubble"]
-        datastore[update.message.chat_id] = {"traversed_states": res[1][0]["traversed_states"], "data": data}
+        datastore[update.message.chat_id] = {"traversedStates": res[1][0]["traversedStates"], "data": data}
         bot.sendMessage(update.message.chat_id, text=response, parse_mode="HTML")
     except starchat_interface.ApiCallException as e:
         response = "I'm sorry " + update.message.chat.first_name +\
-                   ", a problem occourred, please try later or type /help to get the available commands"
+                   ", a problem occourred, please try later or type /help to get the available commands" + e.value
         logger.error(e.value)
         bot.sendMessage(update.message.chat_id, text=response, parse_mode="HTML")
     except KeyError as e:
-        response = "I'm sorry " + update.message.chat.first_name + ", I don't know how to answer, sorry"
+        response = "I'm sorry " + update.message.chat.first_name + ", I don't know how to answer, sorry" + e.value
         logger.error(e.value)
         bot.sendMessage(update.message.chat_id, text=response, parse_mode="HTML")
     except IndexError as e:
-        response = "I'm sorry " + update.message.chat.first_name + ", I don't know how to answer, sorry"
+        response = "I'm sorry " + update.message.chat.first_name + ", I don't know how to answer, sorry" + e.value
         logger.error(e.value)
         bot.sendMessage(update.message.chat_id, text=response, parse_mode="HTML")
 
@@ -82,20 +80,19 @@ def echo(bot, update):
 
     try:
         data = datastore[update.message.chat_id]["data"]
-        traversed_states = datastore[update.message.chat_id]["traversed_states"]
+        traversedStates = datastore[update.message.chat_id]["traversedStates"]
     except:
         data = { "user_first_name": update.message.chat.first_name }
-        traversed_states = []
+        traversedStates = []
 
     body = {
-            "conversation_id": str(update.message.chat_id),
-            "user_input": {
-                "text": update.message.text
-            },
-            "values": {
-                "data": data
-            },
-            "traversed_states": traversed_states
+        "conversationId": str(update.message.chat_id),
+        "userInput": {
+            "text": update.message.text
+        },
+        "data": data,
+        "traversedStates": traversedStates,
+        "value": {}
         }
 
     try:
@@ -103,16 +100,16 @@ def echo(bot, update):
         logger.debug(res)
         response = res[1][0]["bubble"]
         bot.sendMessage(update.message.chat_id, text=response, parse_mode="HTML")
-        datastore.setdefault(update.message.chat_id, {})["traversed_states"] = res[1][0]["traversed_states"]
+        datastore.setdefault(update.message.chat_id, {})["traversedStates"] = res[1][0]["traversedStates"]
         datastore[update.message.chat_id]["data"] = res[1][0]["data"]
     except (starchat_interface.NoContentApiCallException, KeyError, IndexError) as e:
-        response = "I'm sorry " + update.message.chat.first_name + ", I don't know how to answer"
-        logger.error(e.value)
+        response = "I'm sorry " + update.message.chat.first_name + ", I don't know how to answer" + e.value
+        logger.error(e)
         bot.sendMessage(update.message.chat_id, text=response, parse_mode="HTML")
     except starchat_interface.ApiCallException as e:
         response = "I'm sorry " + update.message.chat.first_name +\
                    ", a problem occourred, please try later or type /help to get the available commands"
-        logger.error(e.value)
+        logger.error(e)
         bot.sendMessage(update.message.chat_id, text=response, parse_mode="HTML")
 
 
@@ -122,7 +119,7 @@ def error(bot, update, error):
 
 def main():
     # Create the EventHandler and pass it your bot's token.
-    updater = Updater("XXXXX:YYYYYY")
+    updater = Updater("544365769:AAFN97USj9GxGpa_tiZsKWkUMZRQvCxK2i0")
 
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
