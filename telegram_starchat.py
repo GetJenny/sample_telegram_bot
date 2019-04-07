@@ -103,7 +103,7 @@ def echo(bot, update):
         datastore.setdefault(update.message.chat_id, {})["traversedStates"] = res[1][0]["traversedStates"]
         datastore[update.message.chat_id]["data"] = res[1][0]["data"]
     except (starchat_interface.NoContentApiCallException, KeyError, IndexError) as e:
-        response = "I'm sorry " + update.message.chat.first_name + ", I don't know how to answer" + e.value
+        response = "I'm sorry " + update.message.chat.first_name + ", I don't know how to answer" + logger.error(e)
         logger.error(e)
         bot.sendMessage(update.message.chat_id, text=response, parse_mode="HTML")
     except starchat_interface.ApiCallException as e:
@@ -119,7 +119,8 @@ def error(bot, update, error):
 
 def main():
     # Create the EventHandler and pass it your bot's token.
-    updater = Updater("544365769:AAFN97USj9GxGpa_tiZsKWkUMZRQvCxK2i0")
+#    updater = Updater("544365769:AAFN97USj9GxGpa_tiZsKWkUMZRQvCxK2i0")  #eremocafebot
+    updater = Updater("771422485:AAGNApYoRMuX6QkyAkjPcgNlKPy_6U7dNZI")  #marioalemibot
 
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
